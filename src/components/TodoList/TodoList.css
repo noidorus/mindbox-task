@@ -1,0 +1,14 @@
+.todo__list {
+  list-style: none;
+  padding: 0;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.list__item.checked span {
+  text-decoration: line-through;
+}

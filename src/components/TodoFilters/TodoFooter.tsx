@@ -1,15 +1,10 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
-import {
-  changeVisibilityFilter,
-  clearCompleted,
-} from '../../redux/todoReducer';
-import './TodoFilters.css';
+import { changeActiveFilter, clearCompleted } from '../../redux/todoReducer';
+import './TodoFooter.scss';
 
 export const TodoFooter = () => {
   const dispatch = useAppDispatch();
-  const itemsLeft = useAppSelector((state) => state.todos).filter(
-    (el) => el.checked !== true
-  );
+  const activeFilter = useAppSelector((state) => state.activeFilter);
 
   const filters: ['All', 'Active', 'Completed'] = [
     'All',
@@ -19,26 +14,31 @@ export const TodoFooter = () => {
 
   return (
     <div className="todo__footer">
-      <div>{itemsLeft.length} items left</div>
-      <div>
+      <div className="filters">
         {filters.map((filter) => (
-          <button
+          <div
+            className={
+              activeFilter === filter
+                ? 'btn btn-filter active'
+                : 'btn btn-filter'
+            }
             onClick={() => {
-              dispatch(changeVisibilityFilter(filter));
+              dispatch(changeActiveFilter(filter));
             }}
             key={filter}
           >
             {filter}
-          </button>
+          </div>
         ))}
       </div>
-      <button
+      <div
+        className="btn"
         onClick={() => {
           dispatch(clearCompleted());
         }}
       >
         Clear completed
-      </button>
+      </div>
     </div>
   );
 };

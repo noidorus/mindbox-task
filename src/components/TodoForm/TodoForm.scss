@@ -1,0 +1,16 @@
+.todo__form {
+  padding: 20px 0;
+
+  .new-todo {
+    border: 1px solid #ddd;
+    min-width: 80%;
+    line-height: 1.3em;
+    border-radius: 3px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+
+    &::placeholder {
+      color: orange;
+    }
+  }
+}

@@ -2,6 +2,8 @@ import { ChangeEvent, FormEvent } from 'react';
 import { addTodo, updateNewTodoText } from '../../redux/todoReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
 
+import './TodoForm.scss';
+
 export const TodoForm = () => {
   const newTodoText = useAppSelector((state) => state.newTodoText);
   const dispatch = useAppDispatch();
@@ -18,6 +20,7 @@ export const TodoForm = () => {
   return (
     <form className="todo__form" onSubmit={onAddTodo}>
       <input
+        className="new-todo"
         type="text"
         onChange={onTodoTextChange}
         value={newTodoText}

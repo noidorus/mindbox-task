@@ -3,8 +3,9 @@ import { v4 as uuid } from 'uuid';
 const UPDATE_NEW_TODO_TEXT = 'UPDATE_NEW_TODO_TEXT';
 const ADD_TODO = 'ADD_TODO';
 const CHANGE_TODO_CHECKED_STATUS = 'CHANGE_TODO_CHECKED_STATUS';
-const CHANGE_VISIBILITY_FILTER = 'CHANGE_VISIBILITY_FILTER';
+const CHANGE_ACTIVE_FILTER = 'CHANGE_ACTIVE_FILTER';
 const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
+const DELETE_TODO = 'DELETE_TODO';
 
 const initialState: TodoState = {
   todos: [
@@ -13,7 +14,7 @@ const initialState: TodoState = {
     { id: '7639dnsf1', checked: false, text: 'Refactor' },
   ],
   newTodoText: '',
-  visibilityFilter: 'All',
+  activeFilter: 'All',
 };
 
 interface TodoState {
@@ -23,7 +24,7 @@ interface TodoState {
     checked: boolean;
     text: string;
   }[];
-  visibilityFilter: 'All' | 'Active' | 'Completed';
+  activeFilter: 'All' | 'Active' | 'Completed';
 }
 
 export const todoReducer = (
@@ -48,12 +49,17 @@ export const todoReducer = (
           return el.id === payload ? { ...el, checked: !el.checked } : el;
         }),
       };
-    case CHANGE_VISIBILITY_FILTER:
-      return { ...state, visibilityFilter: payload };
+    case CHANGE_ACTIVE_FILTER:
+      return { ...state, activeFilter: payload };
     case CLEAR_COMPLETED:
       return {
         ...state,
         todos: state.todos.filter((el) => el.checked !== true),
+      };
+    case DELETE_TODO:
+      return {
+        ...state,
+        todos: state.todos.filter((el) => el.id !== payload),
       };
     default:
       return state;
@@ -74,14 +80,18 @@ export const changeTodoCheckedStatus = (
   type: CHANGE_TODO_CHECKED_STATUS,
   payload: id,
 });
-export const changeVisibilityFilter = (
-  filterValue: TodoState['visibilityFilter']
-): ChangeVisibilityFilter => ({
-  type: CHANGE_VISIBILITY_FILTER,
+export const changeActiveFilter = (
+  filterValue: TodoState['activeFilter']
+): ChangeActiveFilter => ({
+  type: CHANGE_ACTIVE_FILTER,
   payload: filterValue,
 });
 export const clearCompleted = () => ({
   type: CLEAR_COMPLETED,
+});
+export const deleteTodo = (id: string): DeleteTodo => ({
+  type: DELETE_TODO,
+  payload: id,
 });
 
 interface UpdateNewTodoText {
@@ -96,19 +106,24 @@ interface ChangeTodoCheckedStatus {
   type: typeof CHANGE_TODO_CHECKED_STATUS;
   payload: string;
 }
-interface ChangeVisibilityFilter {
-  type: typeof CHANGE_VISIBILITY_FILTER;
-  payload: TodoState['visibilityFilter'];
+interface ChangeActiveFilter {
+  type: typeof CHANGE_ACTIVE_FILTER;
+  payload: TodoState['activeFilter'];
 }
 
 interface ClearCompleted {
   type: typeof CLEAR_COMPLETED;
   payload?: undefined;
 }
+interface DeleteTodo {
+  type: typeof DELETE_TODO;
+  payload: string;
+}
 
 type TodoActions =
   | UpdateNewTodoText
   | AddTodo
   | ChangeTodoCheckedStatus
-  | ChangeVisibilityFilter
-  | ClearCompleted;
+  | ChangeActiveFilter
+  | ClearCompleted
+  | DeleteTodo;

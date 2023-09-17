@@ -11,19 +11,30 @@ export const TodoForm = ({ addTodo }: TodoFormProps) => {
 
   const onAddTodo = (e: FormEvent) => {
     e.preventDefault();
-    setNewTodoText('');
-    addTodo(newTodoText);
+
+    if (!!newTodoText.length) {
+      setNewTodoText('');
+      addTodo(newTodoText);
+    }
   };
 
   return (
     <form className="todo__form" onSubmit={onAddTodo}>
       <input
+        data-testId="todo-input"
         className="new-todo"
         type="text"
         onChange={onTodoTextChange}
         value={newTodoText}
         placeholder="What need to be done?"
       />
+      <button
+        type="submit"
+        data-testId="btn-submit"
+        className={!!newTodoText.length ? 'btn-add active' : 'btn-add'}
+      >
+        +
+      </button>
     </form>
   );
 };

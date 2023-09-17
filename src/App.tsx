@@ -4,11 +4,15 @@ import { TodoForm } from './components/TodoForm/TodoForm';
 import { TodoList } from './components/TodoList/TodoList';
 
 import './App.scss';
-import { TodoFooter } from './components/TodoFilters/TodoFooter';
-import { Filters } from './types';
+import { TodoFooter } from './components/TodoFooter/TodoFooter';
+import { Filters, Todo } from './types';
 
-function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+interface AppProps {
+  preloadedTodos?: Todo[];
+}
+
+function App({ preloadedTodos }: AppProps) {
+  const [todos, setTodos] = useState<Todo[]>(preloadedTodos || []);
   const [activeFilter, setActiveFilter] = useState<Filters>('All');
 
   const addTodo = (text: string) => {
@@ -36,14 +40,24 @@ function App() {
     setTodos(todos.filter((el) => el.checked !== true));
   };
 
+  const filteredTodos = todos.filter((todo) => {
+    switch (activeFilter) {
+      case 'Active':
+        return todo.checked !== true;
+      case 'Completed':
+        return todo.checked === true;
+      default:
+        return todo;
+    }
+  });
+
   return (
     <div className="app">
       <div className="todo">
         <h1>Todo list</h1>
         <TodoForm addTodo={addTodo} />
         <TodoList
-          todos={todos}
-          activeFilter={activeFilter}
+          todos={filteredTodos}
           changeTodoCheckedStatus={changeTodoCheckedStatus}
           deleteTodo={deleteTodo}
         />
@@ -55,12 +69,6 @@ function App() {
       </div>
     </div>
   );
-}
-
-interface Todo {
-  id: string;
-  checked: boolean;
-  text: string;
 }
 
 export default App;

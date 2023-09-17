@@ -1,16 +1,14 @@
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
-import { changeActiveFilter, clearCompleted } from '../../redux/todoReducer';
+import { Filters } from '../../types';
 import './TodoFooter.scss';
 
-export const TodoFooter = () => {
-  const dispatch = useAppDispatch();
-  const activeFilter = useAppSelector((state) => state.activeFilter);
+interface TodoFooterProps {
+  activeFilter: string;
+  changeActiveFilter: (filter: Filters) => void;
+  clearCompleted: () => void;
+}
 
-  const filters: ['All', 'Active', 'Completed'] = [
-    'All',
-    'Active',
-    'Completed',
-  ];
+export const TodoFooter = (props: TodoFooterProps) => {
+  const filters: Filters[] = ['All', 'Active', 'Completed'];
 
   return (
     <div className="todo__footer">
@@ -18,12 +16,12 @@ export const TodoFooter = () => {
         {filters.map((filter) => (
           <div
             className={
-              activeFilter === filter
+              props.activeFilter === filter
                 ? 'btn btn-filter active'
                 : 'btn btn-filter'
             }
             onClick={() => {
-              dispatch(changeActiveFilter(filter));
+              props.changeActiveFilter(filter);
             }}
             key={filter}
           >
@@ -34,7 +32,7 @@ export const TodoFooter = () => {
       <div
         className="btn"
         onClick={() => {
-          dispatch(clearCompleted());
+          props.clearCompleted();
         }}
       >
         Clear completed

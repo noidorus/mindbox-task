@@ -1,20 +1,18 @@
-import { ChangeEvent, FormEvent } from 'react';
-import { addTodo, updateNewTodoText } from '../../redux/todoReducer';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import './TodoForm.scss';
 
-export const TodoForm = () => {
-  const newTodoText = useAppSelector((state) => state.newTodoText);
-  const dispatch = useAppDispatch();
+export const TodoForm = ({ addTodo }: TodoFormProps) => {
+  const [newTodoText, setNewTodoText] = useState('');
 
   const onTodoTextChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateNewTodoText(target.value));
+    setNewTodoText(target.value);
   };
 
   const onAddTodo = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(addTodo(newTodoText));
+    setNewTodoText('');
+    addTodo(newTodoText);
   };
 
   return (
@@ -29,3 +27,7 @@ export const TodoForm = () => {
     </form>
   );
 };
+
+interface TodoFormProps {
+  addTodo: (text: string) => void;
+}

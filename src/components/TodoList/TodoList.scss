@@ -14,8 +14,11 @@
     align-items: center;
     gap: 20px;
     border-radius: 3px;
-    padding: 10px;
-    padding-right: 45px;
+    padding: 10px 45px 10px 10px;
+
+    input {
+      cursor: pointer;
+    }
 
     &.checked .list__item-text {
       text-decoration: line-through;

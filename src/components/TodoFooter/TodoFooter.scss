@@ -1,0 +1,42 @@
+.todo__footer {
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.filters {
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  cursor: pointer;
+  position: relative;
+  font-size: 18px;
+  transition: all linear 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 3px;
+    background-color: blueviolet;
+    bottom: -3px;
+    left: 0;
+    transition: all ease-in 0.25s;
+  }
+}
+
+.btn-filter.active::after {
+  width: 100%;
+  background-color: orange;
+}

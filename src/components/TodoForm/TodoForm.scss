@@ -1,0 +1,50 @@
+.todo__form {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  // margin: 0 auto;
+
+  .new-todo {
+    border: 1px solid #ddd;
+    min-width: 60%;
+    line-height: 1.3em;
+    border-radius: 3px;
+    padding: 0.2em 1em;
+    font-size: 1.2em;
+
+    &::placeholder {
+      color: orange;
+    }
+  }
+}
+
+.btn-add {
+  background: #ddd;
+  color: #fefefe;
+  font-size: 2.2em;
+  line-height: 0.5em;
+  padding: 0.2em 0.5em;
+  text-align: center;
+  font-weight: bold;
+
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  pointer-events: none;
+  cursor: pointer;
+  transition: all ease-in 0.25s;
+
+  &.active {
+    background: #6664ff;
+    border-color: #6664ff;
+    pointer-events: visible;
+
+    &:hover {
+      transform: scale(0.96);
+      background: #4442f6;
+      border-color: #4442f6;
+    }
+  }
+}

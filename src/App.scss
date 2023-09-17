@@ -1,0 +1,28 @@
+body {
+  background-color: orange;
+}
+
+input,
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.app {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.todo {
+  background: #f4f7fc;
+  border: 1px solid #eee;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
